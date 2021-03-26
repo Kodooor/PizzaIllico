@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<forms:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:forms="clr-namespace:Storm.Mvvm.Forms;assembly=Storm.Mvvm.Forms"
+                       xmlns:viewModels="clr-namespace:PizzaIllico.Mobile.ViewModels;assembly=PizzaIllico.Mobile"
+                       xmlns:pizzas="clr-namespace:PizzaIllico.Mobile.Dtos.Pizzas;assembly=PizzaIllico.Mobile"
+                       xmlns:extensions="clr-namespace:PizzaIllico.Mobile.Extensions;assembly=PizzaIllico.Mobile"
+                       x:Class="PizzaIllico.Mobile.Pages.ShopListPage"
+                       x:DataType="viewModels:ShopListViewModel"
+                       Title="Shops">
+    <StackLayout>
+        <ActivityIndicator IsRunning="{Binding Running}" />
+        <Label Text="Liste des magasins" FontSize="25" TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center"/>
+        <ListView ItemsSource="{Binding Shops}"
+                  SelectionMode="None"
+                  IsPullToRefreshEnabled="True"
+                  >
+            <ListView.Behaviors>
+                <extensions:ListViewItemTappedBehavior Command="{Binding SelectedCommand}"/>
+            </ListView.Behaviors>
+            <ListView.ItemTemplate >
+                <DataTemplate>
+                    <ViewCell x:DataType="pizzas:ShopItem" >
+                        <StackLayout Spacing="-5" Padding="1" >
+                            <Label Text="{Binding Name}" TextColor="black" FontSize="17" FontAttributes="Bold"/>
+                            <FlexLayout>
+                                <Label Text="Distance : " TextColor="black" FontSize="17"/>
+                                <Label Text="{Binding Distance}" TextColor="black" FontSize="17"/>
+                                <Label Text=" km" FontSize="17"/>
+                            </FlexLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Text="Voir les magasins sur une carte" Command="{Binding GoMapsPage}" BackgroundColor="#156A31" TextColor="White"></Button>
+        <Button Text="Voir Profil" Command="{Binding VoirProfil}" BackgroundColor="#156A31" TextColor="White"/>
+
+    </StackLayout>
+</forms:BaseContentPage>

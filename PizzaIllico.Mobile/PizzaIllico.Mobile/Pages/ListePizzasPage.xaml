@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<forms:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:forms="clr-namespace:Storm.Mvvm.Forms;assembly=Storm.Mvvm.Forms"
+                       xmlns:viewModels="clr-namespace:PizzaIllico.Mobile.ViewModels;assembly=PizzaIllico.Mobile"
+                       xmlns:pizzas="clr-namespace:PizzaIllico.Mobile.Dtos.Pizzas;assembly=PizzaIllico.Mobile"
+                       xmlns:extensions="clr-namespace:PizzaIllico.Mobile.Extensions;assembly=PizzaIllico.Mobile"
+                       x:Class="PizzaIllico.Mobile.Pages.ListePizzasPage"
+                       x:DataType="viewModels:ListePizzasModel">
+
+    <StackLayout>
+        <Label Text="Liste des pizzas du restaurant" FontSize="25" TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center"/>
+        <ListView ItemsSource="{Binding Pizzas}"
+                  SelectionMode="None"
+                  >
+            <ListView.Behaviors>
+                <extensions:ListViewItemTappedBehavior Command="{Binding SelectedPizza}"/>
+            </ListView.Behaviors>
+            <ListView.ItemTemplate >
+                <DataTemplate>
+                    <ViewCell x:DataType="pizzas:PizzaItem" >
+                        <StackLayout Spacing="-5" Padding="1" >
+                            <FlexLayout>
+                                <Label Text="{Binding Name}" TextColor="black" FontSize="17" FontAttributes="Bold"/>
+                                <Label Text=" : " TextColor="black" FontSize="17"/>
+                                <Label Text="{Binding Price}" TextColor="black" FontSize="17"/>
+                                <Label Text=" euros " TextColor="black" FontSize="17"/>
+                            </FlexLayout>
+                           
+                            <FlexLayout>
+                                <Label Text="Rupture de stock : " TextColor="black"/>
+                                <Label Text="{Binding OutOfStock}" TextColor="black"/>
+                            </FlexLayout>
+
+                            
+                            
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Command="{Binding VoirPanier}" Text="Voir le panier" BackgroundColor="#156A31" TextColor="White"/>
+    </StackLayout>
+</forms:BaseContentPage>

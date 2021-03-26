@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PizzaIllico.Mobile.Pages.InscriptionPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Email :"/>
+            <Entry Text="{Binding Email}"/>
+
+            <Label Text="Nom :"/>
+            <Entry Text="{Binding Nom}"/>
+
+            <Label Text="Prénom :"/>
+            <Entry Text="{Binding Prenom}"/>
+
+            <Label Text="Téléphone :"/>
+            <Entry Text="{Binding Telephone}"/>
+
+            <Label Text="Mot de passe :"/>
+            <Entry Text="{Binding MotDePasse}"/>
+
+            <Button Command="{Binding Inscription}" Text="Inscription"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

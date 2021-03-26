@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PizzaIllico.Mobile.Pages.ProfilPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Profil" FontSize="Large" TextColor="black" HorizontalTextAlignment="Center"/>
+            <Label Text="Email :"/>
+            <Entry Text="{Binding Email}" IsReadOnly="True"/>
+
+            <Label Text="Nom :"/>
+            <Entry Text="{Binding Nom}"/>
+
+            <Label Text="Prénom :"/>
+            <Entry Text="{Binding Prenom}"/>
+
+            <Label Text="Téléphone :"/>
+            <Entry Text="{Binding Telephone}"/>
+
+            <Button Command="{Binding EditerProfil}" Text="Editer le profil" BackgroundColor="#156A31" TextColor="White"/>
+
+            <Label Text="Mot de passe" FontSize="Large" TextColor="black" HorizontalTextAlignment="Center"/>
+            
+            <Label Text="Mot de passe :" />
+            <Entry Text="{Binding MotDePasse}" IsPassword="True"/>
+
+            <Label Text="Confirmer votre mot de passe :"/>
+            <Entry Text="{Binding MotDePasseConfirmation}" IsPassword="True"/>
+
+            <Button Command="{Binding ModifierMotDePasse}" Text="Editer le mdp"  BackgroundColor="#156A31" TextColor="White"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

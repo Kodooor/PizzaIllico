@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:PizzaIllico.Mobile.ViewModels;assembly=PizzaIllico.Mobile"
+             x:Class="PizzaIllico.Mobile.Pages.ConnexionPage"
+             x:DataType="viewModels:ConnexionPageModel">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Center">
+            <Label Text="PizzaIllico !" TextColor="#156A31" FontSize="30" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+            <Label Text="Login :" TextColor="#156A31"/>
+            <Entry Text="{Binding Login}"/>
+
+            <Label Text="Password:" TextColor="#156A31"/>
+            <Entry Text="{Binding Password}" IsPassword="True"/>
+
+            <Button Command="{Binding Connexion}" Text="Valider" BackgroundColor="#156A31" TextColor="White"/>
+            <FlexLayout>
+                <Label Text="Pas encore membre ? " TextColor="#156A31" Padding="14"/>
+                <Button Command="{Binding Inscription}" Text="Cliquez-ici !" BackgroundColor="Transparent" FontSize="Medium" FontAttributes="Bold"/>
+            </FlexLayout>
+            
+
+            <ActivityIndicator IsRunning="{Binding Running}" />
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

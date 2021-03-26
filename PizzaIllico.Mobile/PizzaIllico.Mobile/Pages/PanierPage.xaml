@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:PizzaIllico.Mobile.ViewModels;assembly=PizzaIllico.Mobile"
+             xmlns:pizzas="clr-namespace:PizzaIllico.Mobile.Dtos.Pizzas;assembly=PizzaIllico.Mobile"
+             xmlns:extensions="clr-namespace:PizzaIllico.Mobile.Extensions;assembly=PizzaIllico.Mobile"
+             x:Class="PizzaIllico.Mobile.Pages.PanierPage"
+             x:DataType="viewModels:PanierPageModel">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Votre panier" TextColor="#156A31" FontSize="30" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+            
+            <ListView ItemsSource="{Binding DetailPizzaPanier}"
+                  SelectionMode="None"  
+                  IsPullToRefreshEnabled="True"
+                  >
+                <ListView.Behaviors>
+                </ListView.Behaviors>
+                <ListView.ItemTemplate >
+                    <DataTemplate>
+                        <ViewCell x:DataType="pizzas:PizzaItem" >
+                            <StackLayout Spacing="-5" Padding="1" >
+                                <Label Text="{Binding Name}" TextColor="black" FontSize="17" FontAttributes="Bold"/>
+
+                                <FlexLayout>
+                                    <Label Text="Prix : " TextColor="black" FontSize="17"/>
+                                    <Label Text="{Binding Price}" TextColor="black" FontSize="17"/>
+                                    <Label Text=" euros " TextColor="black" FontSize="17"/>
+                                    <ImageButton Command="{Binding Source={RelativeSource  AncestorType={x:Type viewModels:PanierPageModel}},
+                                                 Path=SelectCommand}"
+                                                CommandParameter="{Binding}"
+                                                 Source="croix" 
+                                                 Aspect="AspectFit" 
+                                                 WidthRequest="30" 
+                                                 HeightRequest="30" 
+                                                 Margin="200,-10,0,0" 
+                                                 HorizontalOptions="End"
+                                                 />
+
+
+
+                                </FlexLayout>
+                                
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Command="{Binding ValiderCommande}" Text="Passer commande" BackgroundColor="#156A31" TextColor="White"/>
+            <Button Command="{Binding AnciennesCommandes}" Text="Voir anciennes commandes" BackgroundColor="#156A31" TextColor="White"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
