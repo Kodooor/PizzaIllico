@@ -30,8 +30,8 @@ namespace PizzaIllico.Mobile.ViewModels
         public MapsPageModel()
         {
             MyMap = new Xamarin.Forms.Maps.Map();
-            
-            
+            MyMap.IsShowingUser = true;
+
         }
 
         public async void GetCurrentLocation()

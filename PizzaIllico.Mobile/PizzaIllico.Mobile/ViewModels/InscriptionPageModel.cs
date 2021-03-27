@@ -47,6 +47,7 @@ namespace PizzaIllico.Mobile.ViewModels
                 CrossSettings.Current.AddOrUpdateValue("login", "");
                 CrossSettings.Current.AddOrUpdateValue("password", "");
                 CrossSettings.Current.AddOrUpdateValue("token", "");
+                await Application.Current.MainPage.DisplayAlert("Indication", "Votre inscription a bien été prise en compte", "Ok");
                 await NavigationService.PushAsync<Pages.ConnexionPage>();
             }
             else

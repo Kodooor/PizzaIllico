@@ -9,6 +9,8 @@
                 Source="{Binding UrlImage}"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
+                WidthRequest="300"
+                HeightRequest="300"
                 />
             <Label Text="Ingrédients :"/>
             <Editor Text="{Binding Ingredients}" IsReadOnly="True"/>

@@ -126,6 +126,7 @@ namespace PizzaIllico.Mobile.Services
             string content = await response.Content.ReadAsStringAsync();
            
             Console.WriteLine("CONTENUMDP" + content);
+
             return JsonConvert.DeserializeObject<TResponse>(content);
         }
 

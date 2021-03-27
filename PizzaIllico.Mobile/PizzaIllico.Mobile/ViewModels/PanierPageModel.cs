@@ -27,6 +27,13 @@ namespace PizzaIllico.Mobile.ViewModels
             set => SetProperty(ref _ancCommandes, value);
         }
 
+        private double total;
+        public double Total
+        {
+            get => total;
+            set => SetProperty(ref total, value);
+        }
+
         public ICommand SelectCommand { get; }
 
         public List<long> listePizzaPanier;
@@ -49,7 +56,13 @@ namespace PizzaIllico.Mobile.ViewModels
             var confirmed = await Application.Current.MainPage.DisplayAlert("Alert", "Voulez vous vraiment supprimer l'élément sélectionné ?", "Oui", "Non");
             if (confirmed)
             {               
-               DetailPizzaPanier.Remove(value);      
+                DetailPizzaPanier.Remove(value);
+                // On recalcule le total
+                Total = 0;
+                for (int i = 0; i < DetailPizzaPanier.Count(); i++)
+                {
+                    Total += DetailPizzaPanier[i].Price;
+                }
             }
         }
         public async void ValidCommande()
@@ -133,6 +146,10 @@ namespace PizzaIllico.Mobile.ViewModels
             Pizza = GetNavigationParameter<PizzaItem>("ListePizzas");
             ShopItem = GetNavigationParameter<ShopItem>("Shop");
             DetailPizzaPanier = GetNavigationParameter<ObservableCollection<PizzaItem>>("DetailPizzaPanier");
+            for(int i=0; i<DetailPizzaPanier.Count(); i++)
+            {
+                Total += DetailPizzaPanier[i].Price;
+            }
         }
     }
 }

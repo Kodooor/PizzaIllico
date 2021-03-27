@@ -12,7 +12,8 @@
             
             <ListView ItemsSource="{Binding DetailPizzaPanier}"
                   SelectionMode="None"  
-                  IsPullToRefreshEnabled="True"
+                  SeparatorColor="#156A31"
+                  HasUnevenRows="true"
                   >
                 <ListView.Behaviors>
                 </ListView.Behaviors>
@@ -36,9 +37,6 @@
                                                  Margin="200,-10,0,0" 
                                                  HorizontalOptions="End"
                                                  />
-
-
-
                                 </FlexLayout>
                                 
                             </StackLayout>
@@ -46,6 +44,11 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <FlexLayout VerticalOptions="End">
+                <Label Text="Total : " FontSize="Medium" FontAttributes="Bold"/>
+                <Label Text="{Binding Total}" FontSize="Medium" FontAttributes="Bold"/>
+                <Label Text=" euros " FontSize="Medium" FontAttributes="Bold"/>
+            </FlexLayout>
             <Button Command="{Binding ValiderCommande}" Text="Passer commande" BackgroundColor="#156A31" TextColor="White"/>
             <Button Command="{Binding AnciennesCommandes}" Text="Voir anciennes commandes" BackgroundColor="#156A31" TextColor="White"/>
         </StackLayout>

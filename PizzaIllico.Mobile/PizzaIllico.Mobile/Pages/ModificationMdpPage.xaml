@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PizzaIllico.Mobile.Pages.ModificationMdpPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Modification mot de passe" FontSize="Large" TextColor="#156A31" HorizontalTextAlignment="Center" Margin="0,0,0,40"/>
+            
+
+            <Label Text="Mot de passe actuel :" TextColor="black" />
+            <Entry Text="{Binding MotDePasse}" IsPassword="True"/>
+
+            <Label Text="Nouveau mot de passe :"  TextColor="black" />
+            <Entry Text="{Binding MotDePasseConfirmation}" IsPassword="True"/>
+
+            <Label Text="Confirmer nouveau mot de passe :"  TextColor="black" />
+            <Entry Text="{Binding MotDePasseConfirmationConfirmation}" IsPassword="True"/>
+            
+            <Button Command="{Binding ModifierMotDePasse}" Text="Editer le mdp"  BackgroundColor="#156A31" TextColor="White"/>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

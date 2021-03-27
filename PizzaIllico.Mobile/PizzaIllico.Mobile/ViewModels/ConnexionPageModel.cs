@@ -8,13 +8,14 @@ using PizzaIllico.Mobile.Dtos.Authentications.Credentials;
 using PizzaIllico.Mobile.Services;
 using Plugin.Settings;
 using Storm.Mvvm;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace PizzaIllico.Mobile.ViewModels
 {
+    
     public class ConnexionPageModel : ViewModelBase
     {
-
         public string accessToken = "";
 
         private bool _running;
@@ -56,9 +57,10 @@ namespace PizzaIllico.Mobile.ViewModels
                 accessToken = JsonConvert.DeserializeObject<string>(token);
                 Connect();
             }
-           
+
             Connexion = new Command(Connect);
             Inscription = new Command(Inscript);
+            
         }
 
 
@@ -107,7 +109,8 @@ namespace PizzaIllico.Mobile.ViewModels
             }
             else
             {
-                await NavigationService.PushAsync(new Pages.ConnexionPage());
+                await Application.Current.MainPage.DisplayAlert("Alerte", "Identifiant ou mot de passe incorrect", "Ok");
+                Running = false;
             }
         }
 

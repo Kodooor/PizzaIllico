@@ -8,13 +8,16 @@
                        xmlns:extensions="clr-namespace:PizzaIllico.Mobile.Extensions;assembly=PizzaIllico.Mobile"
                        x:Class="PizzaIllico.Mobile.Pages.ShopListPage"
                        x:DataType="viewModels:ShopListViewModel"
-                       Title="Shops">
+                       Title="Shops"
+                       NavigationPage.HasBackButton="False">
     <StackLayout>
-        <ActivityIndicator IsRunning="{Binding Running}" />
-        <Label Text="Liste des magasins" FontSize="25" TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center"/>
+        <Label Text="Liste des magasins" FontSize="25" TextColor="#156A31" FontAttributes="Bold" HorizontalOptions="Center"/>
         <ListView ItemsSource="{Binding Shops}"
                   SelectionMode="None"
                   IsPullToRefreshEnabled="True"
+                  RefreshCommand="{Binding RefreshCommand}"
+                  IsRefreshing="{Binding IsRefreshing}"
+                  SeparatorColor="#156A31"
                   >
             <ListView.Behaviors>
                 <extensions:ListViewItemTappedBehavior Command="{Binding SelectedCommand}"/>
@@ -34,6 +37,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <ActivityIndicator IsRunning="{Binding Running}" IsVisible="{Binding IsVisible}"/>
         <Button Text="Voir les magasins sur une carte" Command="{Binding GoMapsPage}" BackgroundColor="#156A31" TextColor="White"></Button>
         <Button Text="Voir Profil" Command="{Binding VoirProfil}" BackgroundColor="#156A31" TextColor="White"/>
 

@@ -15,7 +15,6 @@ namespace PizzaIllico.Mobile.ViewModels
 {
     public class ShopListViewModel : ViewModelBase
     {
-		ActivityIndicator activityIndicator = new ActivityIndicator();
 		public string tokenUtilisateur;
 	    private ObservableCollection<ShopItem> _shops;
 
@@ -41,24 +40,81 @@ namespace PizzaIllico.Mobile.ViewModels
 
 		private Xamarin.Forms.Maps.Position pos;
 
-		public ShopListViewModel()
+		private bool _isRefreshing = false;
+		public bool IsRefreshing
+		{
+			get { return _isRefreshing; }
+			set => SetProperty(ref _isRefreshing, value);
+		}
+
+		private bool _isVisible = true;
+		public bool IsVisible
+		{
+			get { return _isVisible; }
+			set => SetProperty(ref _isVisible, value);
+		}
+		
+		public ICommand RefreshCommand
+		{
+			get
+			{
+				return new Command(async () =>
+				{
+					IsRefreshing = true;
+
+					await RefreshData();
+
+					IsRefreshing = false;
+				});
+			}
+		}
+
+        private async Task RefreshData()
+        {
+			await OnResume();
+
+		}
+
+        public ShopListViewModel()
         {
 			VoirProfil = new Command(VoirProf);
 			SelectedCommand = new Command<ShopItem>(ListePizzasRestaurant);
 			GoMapsPage = new Command(GoPageMaps);
-			GetCurrentLocation();
-		}
 
-		public async void GetCurrentLocation()
+		}
+		
+		public async Task GetCurrentLocation()
 		{
-			var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
-			var m = await Geolocation.GetLocationAsync(request);
-			pos = new Xamarin.Forms.Maps.Position(m.Latitude, m.Longitude);
-			
+			if (pos.Latitude == 0 && pos.Longitude == 0)
+			{
+				var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+				try
+				{
+					var m = await Geolocation.GetLocationAsync(request);
+					pos = new Xamarin.Forms.Maps.Position(m.Latitude, m.Longitude);
+				}
+				catch (FeatureNotSupportedException fnsEx)
+				{
+
+				}
+				catch (FeatureNotEnabledException fneEx)
+				{
+					await Application.Current.MainPage.DisplayAlert("Attention", "Votre géolocalisation n'est pas activée, les magasins ne sont donc pas triés", "Ok");
+
+				}
+				catch (PermissionException pEx)
+				{
+
+				}
+				catch (Exception ex)
+				{
+
+				}
+			}
 		}
 
 		private async void VoirProf()
-        {
+        {			
 			await NavigationService.PushAsync<Pages.ProfilPage>(
 						new Dictionary<string, object>()
 						{
@@ -111,13 +167,15 @@ namespace PizzaIllico.Mobile.ViewModels
 				
 				response.Data.Remove(response.Data[indiceDistance]);
 				a++;
-			}
+			}			
 			return listeTriee;
         }
 
 		public override async Task OnResume()
         {
+			await GetCurrentLocation();
 			await base.OnResume();
+
 			Console.WriteLine("positioooon" + pos.Latitude);
 
 			IPizzaApiService service = DependencyService.Get<IPizzaApiService>();
@@ -128,9 +186,9 @@ namespace PizzaIllico.Mobile.ViewModels
 	        if (response.IsSuccess)
 	        {
 				Shops = trierRestaurant(response);
-				
-			}
-			activityIndicator.IsRunning = false;
+				Running = false;
+				IsVisible = false;
+			}			
 		}
 
 		private async void ListePizzasRestaurant(ShopItem obj)
@@ -168,6 +226,8 @@ namespace PizzaIllico.Mobile.ViewModels
 
 		public override void Initialize(Dictionary<string, object> navigationParameters)
 		{
+			Running = true;
+			IsVisible = true;
 			base.Initialize(navigationParameters);
 			Token = GetNavigationParameter<string>("Token");
 			Console.WriteLine("positioooon" + pos.Latitude);

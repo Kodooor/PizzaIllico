@@ -10,9 +10,11 @@
                        x:DataType="viewModels:ListePizzasModel">
 
     <StackLayout>
-        <Label Text="Liste des pizzas du restaurant" FontSize="25" TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center"/>
+        <Label Text="Liste des pizzas du restaurant" FontSize="25" TextColor="#156A31" FontAttributes="Bold" HorizontalOptions="Center"/>
         <ListView ItemsSource="{Binding Pizzas}"
                   SelectionMode="None"
+                  SeparatorColor="#156A31"
+                  HasUnevenRows="true"
                   >
             <ListView.Behaviors>
                 <extensions:ListViewItemTappedBehavior Command="{Binding SelectedPizza}"/>
@@ -20,21 +22,18 @@
             <ListView.ItemTemplate >
                 <DataTemplate>
                     <ViewCell x:DataType="pizzas:PizzaItem" >
-                        <StackLayout Spacing="-5" Padding="1" >
-                            <FlexLayout>
-                                <Label Text="{Binding Name}" TextColor="black" FontSize="17" FontAttributes="Bold"/>
-                                <Label Text=" : " TextColor="black" FontSize="17"/>
+                        <StackLayout Spacing="-5" Padding="1">
+                            <Label Text="{Binding Name}" TextColor="black" FontSize="17" FontAttributes="Bold"/>
+                            <FlexLayout >
+                                <Label Text="Prix : " TextColor="black" FontSize="17"/>
                                 <Label Text="{Binding Price}" TextColor="black" FontSize="17"/>
                                 <Label Text=" euros " TextColor="black" FontSize="17"/>
                             </FlexLayout>
-                           
+
                             <FlexLayout>
                                 <Label Text="Rupture de stock : " TextColor="black"/>
                                 <Label Text="{Binding OutOfStock}" TextColor="black"/>
                             </FlexLayout>
-
-                            
-                            
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

@@ -1,13 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PizzaIllico.Mobile.Pages.InscriptionPage">
+             x:Class="PizzaIllico.Mobile.Pages.EditionProfilPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Inscription" FontSize="Large" TextColor="#156A31" HorizontalTextAlignment="Center"/>
-
+            <Label Text="Profil" FontSize="Large" TextColor="#156A31" HorizontalTextAlignment="Center"/>
             <Label Text="Email :"/>
-            <Entry Text="{Binding Email}"/>
+            <Entry Text="{Binding Email}" IsReadOnly="True"/>
 
             <Label Text="Nom :"/>
             <Entry Text="{Binding Nom}"/>
@@ -18,10 +17,7 @@
             <Label Text="Téléphone :"/>
             <Entry Text="{Binding Telephone}"/>
 
-            <Label Text="Mot de passe :"/>
-            <Entry Text="{Binding MotDePasse}"/>
-
-            <Button Command="{Binding Inscription}" Text="Inscription" BackgroundColor="#156A31" TextColor="White"/>
+            <Button Command="{Binding EditerProfil}" Text="Editer le profil" BackgroundColor="#156A31" TextColor="White"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

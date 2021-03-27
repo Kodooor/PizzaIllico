@@ -10,113 +10,49 @@ using PizzaIllico.Mobile.Services;
 using Plugin.Settings;
 using Storm.Mvvm;
 using Storm.Mvvm.Navigation;
+using Storm.Mvvm.Services;
 using Xamarin.Forms;
 
 namespace PizzaIllico.Mobile.ViewModels
 {
     public class ProfilPageModel : ViewModelBase
     {
-        public string tokenUtilisateur;
+        private string tokenUtilisateur;
+        public ICommand Deconnexion { get; }
+        public ICommand goEditerProfil { get; }
+        public ICommand goEditerMdp { get; }
 
-        public string _email;
-        public string Email
-        {
-            get { return _email; }
-            set { SetProperty(ref _email, value); }
-        }
-
-        public string _nom;
-        public string Nom
-        {
-            get { return _nom; }
-            set { SetProperty(ref _nom, value); }
-        }
-
-        public string _prenom;
-        public string Prenom
-        {
-            get { return _prenom; }
-            set { SetProperty(ref _prenom, value); }
-        }
-
-        public string _telephone;
-        public string Telephone
-        {
-            get { return _telephone; }
-            set { SetProperty(ref _telephone, value); }
-        }
-
-        public string MotDePasse { get; set; }
-        public string MotDePasseConfirmation { get; set; }
-
-        public ICommand ModifierMotDePasse { get; set; }
-        public ICommand EditerProfil { get; }
         public ProfilPageModel()
-        {           
-            EditerProfil = new Command(EditionProfil);
-            ModifierMotDePasse = new Command(ModificationMotDePasse);            
+        {                      
+            Deconnexion = new Command(Deco);
+            goEditerProfil = new Command(GoEditProfil);
+            goEditerMdp = new Command(GoEditMdp);
         }
-
-        public async void getInfosUtilisateur()
+        public async void GoEditProfil()
         {
-            IPizzaApiService service = DependencyService.Get<IPizzaApiService>();
-            UserProfileResponse userProfile = new UserProfileResponse();
-
-            var response = await service.InfosUtilisateur(Token);
-
-            if (response.IsSuccess)
-            {
-                Email = response.Data.Email;
-                Nom = response.Data.LastName;
-                Prenom = response.Data.FirstName;
-                Telephone = response.Data.PhoneNumber;               
-            }
-        }
-
-        public async void EditionProfil()
-        {
-            IPizzaApiService service = DependencyService.Get<IPizzaApiService>();
-            UserProfileResponse userProfilResponse = new UserProfileResponse();
-            userProfilResponse.Email = Email;
-            userProfilResponse.LastName = Nom;
-            userProfilResponse.FirstName = Prenom;
-            userProfilResponse.PhoneNumber = Telephone;
-
-            Response<UserProfileResponse> response = await service.EditerProfilUtilisateur(tokenUtilisateur, userProfilResponse);
-
-            if (response.IsSuccess)
-            {
-                Email = response.Data.Email;
-                Nom = response.Data.LastName;
-                Prenom = response.Data.FirstName;
-                Telephone = response.Data.PhoneNumber;
-                await NavigationService.PushAsync<Pages.ProfilPage>(
+            await NavigationService.PushAsync<Pages.EditionProfilPage>(
                         new Dictionary<string, object>()
                         {
-
-                        { "Token", tokenUtilisateur }
+                                { "Token", Token }
                         });
-            }
         }
-        public async void ModificationMotDePasse()
+
+        public async void GoEditMdp()
         {
-            IPizzaApiService service = DependencyService.Get<IPizzaApiService>();
-            SetPasswordRequest setPasswordRequest = new SetPasswordRequest();
-
-            setPasswordRequest.OldPassword = MotDePasse;
-            setPasswordRequest.NewPassword = MotDePasseConfirmation;
-
-            Response<SetPasswordRequest> response = await service.ModifierMDP(tokenUtilisateur, setPasswordRequest);
-
-            if (response.IsSuccess)
-            {
-                CrossSettings.Current.AddOrUpdateValue("login", "");
-                CrossSettings.Current.AddOrUpdateValue("password", "");
-                CrossSettings.Current.AddOrUpdateValue("token", "");
-                await NavigationService.PushAsync<Pages.ConnexionPage>();
-                       
-            }
+            await NavigationService.PushAsync<Pages.ModificationMdpPage>(
+                        new Dictionary<string, object>()
+                        {
+                                { "Token", Token }
+                        });
         }
+        public async void Deco()
+        {
+            CrossSettings.Current.AddOrUpdateValue("login", "");
+            CrossSettings.Current.AddOrUpdateValue("password", "");
+            CrossSettings.Current.AddOrUpdateValue("token", "");
+            await NavigationService.PushAsync<Pages.ConnexionPage>();
+        }
+
 
         [NavigationParameter]
         public string Token
@@ -129,7 +65,7 @@ namespace PizzaIllico.Mobile.ViewModels
         {
             base.Initialize(navigationParameters);
             Token = GetNavigationParameter<string>("Token");
-            getInfosUtilisateur();
         }
     }
 }
+
