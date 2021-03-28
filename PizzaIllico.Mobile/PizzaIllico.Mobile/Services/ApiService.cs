@@ -16,7 +16,7 @@ namespace PizzaIllico.Mobile.Services
     {
         Task<TResponse> Get<TResponse>(string url);
 
-        Task<bool> Post<TResponse>(string url, CreateUserRequest myJson);
+        Task<TResponse> Post<TResponse>(string url, CreateUserRequest myJson);
 
         Task<TResponse> PostConnexion<TResponse>(string url, LoginWithCredentialsRequest myJson);
 
@@ -49,7 +49,7 @@ namespace PizzaIllico.Mobile.Services
 	        return JsonConvert.DeserializeObject<TResponse>(content);
         }
 
-        public async Task<bool> Post<TResponse>(string url, CreateUserRequest myJson)
+        public async Task<TResponse> Post<TResponse>(string url, CreateUserRequest myJson)
         {
             string json = JsonConvert.SerializeObject(myJson);
             Console.WriteLine($"Body + {json}");
@@ -61,7 +61,7 @@ namespace PizzaIllico.Mobile.Services
 
             Console.WriteLine($"Contenue + {content}");
 
-            return response.IsSuccessStatusCode;           
+            return JsonConvert.DeserializeObject<TResponse>(content);
         }
 
         public async Task<TResponse> PostConnexion<TResponse>(string url, LoginWithCredentialsRequest myJson)

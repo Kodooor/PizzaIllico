@@ -42,7 +42,7 @@ namespace PizzaIllico.Mobile.ViewModels
 
             var response = await service.CreateUser(user);
 
-            if (response)
+            if (response.IsSuccess)
             {
                 CrossSettings.Current.AddOrUpdateValue("login", "");
                 CrossSettings.Current.AddOrUpdateValue("password", "");

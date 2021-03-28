@@ -16,7 +16,7 @@ namespace PizzaIllico.Mobile.Services
 
         Task<Response<List<PizzaItem>>> ListPizzas(int shopId);
 
-        Task<bool> CreateUser(CreateUserRequest user);
+        Task<Response<UserProfileResponse>> CreateUser(CreateUserRequest user);
 
         Task<Response<LoginResponse>> Connexion(LoginWithCredentialsRequest userConnexion);
 
@@ -53,9 +53,9 @@ namespace PizzaIllico.Mobile.Services
             throw new NotImplementedException();
         }
 
-        public async Task<bool> CreateUser(CreateUserRequest user)
+        public async Task<Response<UserProfileResponse>> CreateUser(CreateUserRequest user)
         {
-            return await _apiService.Post<Response<string>>(Urls.CREATE_USER, user);
+            return await _apiService.Post<Response<UserProfileResponse>>(Urls.CREATE_USER, user);
         }
 
         public async Task<Response<LoginResponse>> Connexion(LoginWithCredentialsRequest userConnexion)
