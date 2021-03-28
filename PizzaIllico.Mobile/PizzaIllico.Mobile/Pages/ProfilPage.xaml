@@ -8,6 +8,7 @@
 
             <Button Command="{Binding goEditerProfil}" Text="Vos informations"  BackgroundColor="#156A31" TextColor="White" Margin="0,0,0,20"/>
             <Button Command="{Binding goEditerMdp}" Text="Editer Mot de Passe"  BackgroundColor="#156A31" TextColor="White" Margin="0,0,0,20"/>
+            <Button Command="{Binding goAnciennesCommandes}" Text="Voir mes anciennes commandes"  BackgroundColor="#156A31" TextColor="White" Margin="0,0,0,20"/>
             <Button Command="{Binding Deconnexion}" Text="Déconnexion"  BackgroundColor="#156A31" TextColor="White" Margin="0,0,0,20"/>
 
 

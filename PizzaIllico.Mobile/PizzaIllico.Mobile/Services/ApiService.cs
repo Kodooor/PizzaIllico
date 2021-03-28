@@ -169,7 +169,7 @@ namespace PizzaIllico.Mobile.Services
 
             HttpResponseMessage response = await _client.SendAsync(request);
             string content = await response.Content.ReadAsStringAsync();
-
+            Console.WriteLine("CONTENT ANCIENNES" + content);
             return JsonConvert.DeserializeObject<TResponse>(content);
         }
 

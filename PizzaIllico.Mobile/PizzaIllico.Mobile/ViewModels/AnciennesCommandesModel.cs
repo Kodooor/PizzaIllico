@@ -23,9 +23,13 @@ namespace PizzaIllico.Mobile.ViewModels
             GoListeShop = new Command(goPageListeShop);
         }
 
-        public void goPageListeShop()
+        private void goPageListeShop()
         {
-            NavigationService.PushAsync(new Pages.ShopListPage());
+             NavigationService.PushAsync<Pages.ShopListPage>(
+                        new Dictionary<string, object>()
+                        {
+                        { "Token", Token }
+                        });
         }
 
 
