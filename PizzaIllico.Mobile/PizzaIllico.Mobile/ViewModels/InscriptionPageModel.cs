@@ -22,6 +22,7 @@ namespace PizzaIllico.Mobile.ViewModels
         public string Telephone { get; set; }
         public string MotDePasse { get; set; }
 
+        public string MotDePasseConfirmation { get; set; }
         public ICommand Inscription { get; }
         public InscriptionPageModel()
         {
@@ -30,29 +31,36 @@ namespace PizzaIllico.Mobile.ViewModels
 
         public async void validerInscription(Object obj)
         {
-            IPizzaApiService service = DependencyService.Get<IPizzaApiService>();
-            CreateUserRequest user = new CreateUserRequest();
-            user.ClientId = "MOBILE";
-            user.ClientSecret = "UNIV";
-            user.Email = Email;
-            user.FirstName = Prenom;
-            user.LastName = Nom;
-            user.Password = MotDePasse;
-            user.PhoneNumber = Telephone;
-
-            var response = await service.CreateUser(user);
-
-            if (response.IsSuccess)
+            if (MotDePasse.Equals(MotDePasseConfirmation))
             {
-                CrossSettings.Current.AddOrUpdateValue("login", "");
-                CrossSettings.Current.AddOrUpdateValue("password", "");
-                CrossSettings.Current.AddOrUpdateValue("token", "");
-                await Application.Current.MainPage.DisplayAlert("Indication", "Votre inscription a bien été prise en compte", "Ok");
-                await NavigationService.PushAsync<Pages.ConnexionPage>();
+                IPizzaApiService service = DependencyService.Get<IPizzaApiService>();
+                CreateUserRequest user = new CreateUserRequest();
+                user.ClientId = "MOBILE";
+                user.ClientSecret = "UNIV";
+                user.Email = Email;
+                user.FirstName = Prenom;
+                user.LastName = Nom;
+                user.Password = MotDePasse;
+                user.PhoneNumber = Telephone;
+
+                var response = await service.CreateUser(user);
+
+                if (response.IsSuccess)
+                {
+                    CrossSettings.Current.AddOrUpdateValue("login", "");
+                    CrossSettings.Current.AddOrUpdateValue("password", "");
+                    CrossSettings.Current.AddOrUpdateValue("token", "");
+                    await Application.Current.MainPage.DisplayAlert("Indication", "Votre inscription a bien été prise en compte", "Ok");
+                    await NavigationService.PushAsync<Pages.ConnexionPage>();
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Alerte", "Veuillez remplir tous les champs", "ok");
+                }
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Alerte", "Veuillez remplir tous les champs", "ok");
+                await Application.Current.MainPage.DisplayAlert("Alerte", "Les mots de passe doivent correspondre", "ok");
             }
 
         }

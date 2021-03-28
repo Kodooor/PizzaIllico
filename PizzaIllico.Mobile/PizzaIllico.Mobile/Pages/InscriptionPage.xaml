@@ -19,7 +19,10 @@
             <Entry Text="{Binding Telephone}"/>
 
             <Label Text="Mot de passe :"/>
-            <Entry Text="{Binding MotDePasse}"/>
+            <Entry Text="{Binding MotDePasse}" IsPassword="True"/>
+
+            <Label Text="Confirmer mot de passe :"/>
+            <Entry Text="{Binding MotDePasseConfirmation}" IsPassword="True"/>
 
             <Button Command="{Binding Inscription}" Text="Inscription" BackgroundColor="#156A31" TextColor="White"/>
         </StackLayout>

@@ -21,7 +21,6 @@ namespace PizzaIllico.Mobile.ViewModels
         public ICommand Deconnexion { get; }
         public ICommand goEditerProfil { get; }
         public ICommand goEditerMdp { get; }
-
         public ProfilPageModel()
         {                      
             Deconnexion = new Command(Deco);
@@ -45,6 +44,7 @@ namespace PizzaIllico.Mobile.ViewModels
                                 { "Token", Token }
                         });
         }
+
         public async void Deco()
         {
             CrossSettings.Current.AddOrUpdateValue("login", "");
